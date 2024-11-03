@@ -56,3 +56,10 @@ docker-compose --version
 ```bash
 docker-compose up --build
 ```
+
+## vue-app
+- 테스트 용도로 간단한 vue-app을 개발하였습니다.
+- docker 실행 후 http://localhost:3000 으로 접속해서 테스트 가능합니다.
+- 로그인 후 메인화면 : http://localhost:3000/
+- 로그인 : http://localhost:3000/login
+- 회원가입 : http://localhost:3000/signup
