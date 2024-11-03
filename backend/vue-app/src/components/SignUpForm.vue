@@ -73,7 +73,7 @@ export default {
       try {
         await register(this.username, this.email, this.password, this.isSuperuser);
         alert('회원가입이 완료되었습니다!');
-        this.$router.push('/'); // 회원가입 후 로그인 페이지로 이동
+        this.$router.push('/login'); // 회원가입 후 로그인 페이지로 이동
       } catch (error) {
         alert('회원가입 실패: ' + error.message);
       }
