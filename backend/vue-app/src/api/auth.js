@@ -8,6 +8,12 @@ export async function login(email, password) {
   }
   
   export async function register(username, email, password,is_superuser) {
-    const response = await axios.post('http://localhost:3001/api/auth/register', { username, email, password,is_superuser });
+    let url;
+    if(is_superuser){
+       url ='http://localhost:3001/api/auth/createsuperuser';
+    }else{
+      url ='http://localhost:3001/api/auth/register';
+    }
+    const response = await axios.post(url, { username, email, password });
     return response.data;
   }
