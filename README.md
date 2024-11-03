@@ -1,15 +1,16 @@
-# 44Labs interview-assignments
+# Microservices Test Guide
 
-> assignments 폴더에는 지원하신 포지션별로 필요한 과제가 준비되어 있습니다:
-- Back-End
-- DevOps
-- Flutter(Mobile)
+이 문서는 `auth-service`, `user-service`, `board-service`에 대한 테스트 시나리오와 가이드를 제공합니다. 각 서비스는 독립적으로 테스트 가능하며, 테스트 환경 설정과 테스트 케이스가 포함되어 있습니다.
 
-## 인터뷰 과제
-> 먼저 지원하신 포지션의 폴더에 있는 guide.md 파일을 확인하시고, 요청된 과제를 정해진 시간 내에 제출해 주시기 바랍니다.
+## 공통 테스트 환경 설정
 
-assignments 폴더의 guide.md 파일을 확인하시면, 각 포지션별 수행 과제와 필수 제출 파일 목록이 안내되어 있습니다.
-과제 완료 후, fork한 레포지토리에서 작업을 완료하고 PR(Pull Request)로 제출해 주세요.
-더 자세한 내용은 각 포지션별 guide.md 파일을 참조해 주십시오.
+- 각 서비스의 루트 디렉토리에서 `.env` 파일을 준비하여 필요한 환경 변수를 설정합니다.
+- `db_test`는 테스트용 데이터베이스를 사용하며, Docker Compose로 설정됩니다.
+- 테스트 실행 전, 각 서비스의 종속성이 모두 정상적으로 시작되었는지 확인합니다.
 
-> 담당자 문의: dev@44labs.com
+### Docker Compose 설정
+
+다음 명령어로 테스트에 필요한 서비스를 Docker Compose로 실행할 수 있습니다.
+
+```bash
+docker-compose up --build
