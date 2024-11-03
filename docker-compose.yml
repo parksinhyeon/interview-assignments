@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  auth-service:
+    build:
+      context: ./auth-service
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - ./auth-service/.env  
+    networks:
+      - microservices-net
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  user-service:
+    build:
+      context: ./user-service
+    ports:
+      - "3002:3002"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - ./user-service/.env  
+    networks:
+      - microservices-net
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3002/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  board-service:
+    build:
+      context: ./board-service
+    ports:
+      - "3003:3003"
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - ./board-service/.env  
+    networks:
+      - microservices-net
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3003/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: sinhyeon
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: report_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - microservices-net
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "sinhyeon","-d","report_db"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+networks:
+  microservices-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
